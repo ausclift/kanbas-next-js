@@ -9,7 +9,7 @@ export default function Dashboard() {
 
         <div className="wd-dashboard-course">
           <Link href="/Courses/1234" className="wd-dashboard-course-link">
-            <Image src="/images/reactjs.webp" width={200} height={150} alt="ReactJS Logo"/>
+            <Image src="/images/reactjs.jpg" width={200} height={150} alt="ReactJS Logo"/>
             <div>
               <h5> CS1234 React JS </h5>
               <p className="wd-dashboard-course-title">
@@ -22,7 +22,7 @@ export default function Dashboard() {
 
         <div className="wd-dashboard-course">
           <Link href="/Courses/5004" className="wd-dashboard-course-link">
-            <Image src="/images/reactjs.webp" width={200} height={150} alt="ReactJS Logo"/>
+            <Image src="/images/reactjs.jpg" width={200} height={150} alt="ReactJS Logo"/>
             <div>
               <h5> CS5004 Java OOD </h5>
               <p className="wd-dashboard-course-title">
@@ -35,7 +35,7 @@ export default function Dashboard() {
 
         <div className="wd-dashboard-course">
           <Link href="/Courses/1234" className="wd-dashboard-course-link">
-            <Image src="/images/reactjs.webp" width={200} height={150} alt="ReactJS Logo"/>
+            <Image src="/images/reactjs.jpg" width={200} height={150} alt="ReactJS Logo"/>
             <div>
               <h5> CS1234 React JS </h5>
               <p className="wd-dashboard-course-title">
@@ -48,7 +48,7 @@ export default function Dashboard() {
 
         <div className="wd-dashboard-course">
           <Link href="/Courses/1234" className="wd-dashboard-course-link">
-            <Image src="/images/reactjs.webp" width={200} height={150} alt="ReactJS Logo"/>
+            <Image src="/images/reactjs.jpg" width={200} height={150} alt="ReactJS Logo"/>
             <div>
               <h5> CS1234 React JS </h5>
               <p className="wd-dashboard-course-title">
@@ -61,7 +61,7 @@ export default function Dashboard() {
 
         <div className="wd-dashboard-course">
           <Link href="/Courses/1234" className="wd-dashboard-course-link">
-            <Image src="/images/reactjs.webp" width={200} height={150} alt="ReactJS Logo"/>
+            <Image src="/images/reactjs.jpg" width={200} height={150} alt="ReactJS Logo"/>
             <div>
               <h5> CS1234 React JS </h5>
               <p className="wd-dashboard-course-title">
@@ -74,7 +74,7 @@ export default function Dashboard() {
 
         <div className="wd-dashboard-course">
           <Link href="/Courses/1234" className="wd-dashboard-course-link">
-            <Image src="/images/reactjs.webp" width={200} height={150} alt="ReactJS Logo"/>
+            <Image src="/images/reactjs.jpg" width={200} height={150} alt="ReactJS Logo"/>
             <div>
               <h5> CS1234 React JS </h5>
               <p className="wd-dashboard-course-title">
@@ -87,7 +87,7 @@ export default function Dashboard() {
 
         <div className="wd-dashboard-course">
           <Link href="/Courses/1234" className="wd-dashboard-course-link">
-            <Image src="/images/reactjs.webp" width={200} height={150} alt="ReactJS Logo"/>
+            <Image src="/images/reactjs.jpg" width={200} height={150} alt="ReactJS Logo"/>
             <div>
               <h5> CS1234 React JS </h5>
               <p className="wd-dashboard-course-title">
@@ -100,7 +100,7 @@ export default function Dashboard() {
 
         <div className="wd-dashboard-course">
           <Link href="/Courses/1234" className="wd-dashboard-course-link">
-            <Image src="/images/reactjs.webp" width={200} height={150} alt="ReactJS Logo"/>
+            <Image src="/images/reactjs.jpg" width={200} height={150} alt="ReactJS Logo"/>
             <div>
               <h5> CS1234 React JS </h5>
               <p className="wd-dashboard-course-title">
