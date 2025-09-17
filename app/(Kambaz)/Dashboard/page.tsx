@@ -22,7 +22,7 @@ export default function Dashboard() {
 
         <div className="wd-dashboard-course">
           <Link href="/Courses/5004" className="wd-dashboard-course-link">
-            <Image src="/images/reactjs.jpg" width={200} height={150} alt="ReactJS Logo"/>
+            <Image src="/images/javalogo.jpg" width={200} height={150} alt="Java Logo"/>
             <div>
               <h5> CS5004 Java OOD </h5>
               <p className="wd-dashboard-course-title">
