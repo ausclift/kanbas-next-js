@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Assignments() {
   return (
     <div id="wd-assignments">
@@ -9,33 +11,33 @@ export default function Assignments() {
         ASSIGNMENTS 40% of Total <button>+</button> </h3>
       <ul id="wd-assignment-list">
         <li className="wd-assignment-list-item">
-          <a href="/Courses/1234/Assignments/123"
+          <Link href="/Courses/1234/Assignments/123"
              className="wd-assignment-link" >
             A1 - ENV + HTML
-          </a><br/>
+          </Link><br/>
 Multiple Modules | <b>Not Available Until</b> May 5 at 6:00pm |<br/>
 <b>Due</b> May 12 at 11:59pm | 100 pts
           </li>
         <li className="wd-assignment-list-item">
-          <a href="/Courses/1234/Assignments/123"
+          <Link href="/Courses/1234/Assignments/123"
              className="wd-assignment-link" >
-            A2 - CSS </a><br/>
+            A2 - CSS </Link><br/>
 Multiple Modules | <b>Not Available Until</b> May 5 at 6:00pm |<br/>
 <b>Due</b> May 12 at 11:59pm | 100 pts
           </li>
         <li className="wd-assignment-list-item">
-          <a href="/Courses/1234/Assignments/123"
+          <Link href="/Courses/1234/Assignments/123"
              className="wd-assignment-link" >
             A3 - JS
-          </a><br/>
+          </Link><br/>
 Multiple Modules | <b>Not Available Until</b> May 5 at 6:00pm |<br/>
 <b>Due</b> May 12 at 11:59pm | 100 pts
           </li>
         <li className="wd-assignment-list-item">
-          <a href="/Courses/1234/Assignments/123"
+          <Link href="/Courses/1234/Assignments/123"
              className="wd-assignment-link" >
             A4 - React
-          </a><br/>
+          </Link><br/>
 Multiple Modules | <b>Not Available Until</b> May 5 at 6:00pm |<br/>
 <b>Due</b> May 12 at 11:59pm | 100 pts
           </li>
@@ -45,34 +47,34 @@ Multiple Modules | <b>Not Available Until</b> May 5 at 6:00pm |<br/>
         QUIZZES 15% of Total <button>+</button> </h3>
       <ul id="wd-quiz-list">
         <li className="wd-assignment-list-item">
-          <a href="/Courses/1234/Assignments/123"
+          <Link href="/Courses/1234/Assignments/123"
              className="wd-assignment-link" >
             Q1 - ENV + HTML
-          </a><br/>
+          </Link><br/>
 Multiple Modules | <b>Not Available Until</b> May 5 at 6:00pm |<br/>
 <b>Due</b> May 12 at 11:59pm | 100 pts
           </li>
         <li className="wd-assignment-list-item">
-          <a href="/Courses/1234/Assignments/123"
+          <Link href="/Courses/1234/Assignments/123"
              className="wd-assignment-link" >
             Q2 - CSS
-          </a><br/>
+          </Link><br/>
 Multiple Modules | <b>Not Available Until</b> May 5 at 6:00pm |<br/>
 <b>Due</b> May 12 at 11:59pm | 100 pts
           </li>
         <li className="wd-assignment-list-item">
-          <a href="/Courses/1234/Assignments/123"
+          <Link href="/Courses/1234/Assignments/123"
              className="wd-assignment-link" >
             Q3 - JS
-          </a><br/>
+          </Link><br/>
 Multiple Modules | <b>Not Available Until</b> May 5 at 6:00pm |<br/>
 <b>Due</b> May 12 at 11:59pm | 100 pts
           </li>
         <li className="wd-assignment-list-item">
-          <a href="/Courses/1234/Assignments/123"
+          <Link href="/Courses/1234/Assignments/123"
              className="wd-assignment-link" >
             Q4 - React
-          </a><br/>
+          </Link><br/>
 Multiple Modules | <b>Not Available Until</b> May 5 at 6:00pm |<br/>
 <b>Due</b> May 12 at 11:59pm | 100 pts
           </li>
@@ -82,18 +84,18 @@ Multiple Modules | <b>Not Available Until</b> May 5 at 6:00pm |<br/>
         EXAMS 20% of Total <button>+</button> </h3>
       <ul id="wd-exam-list">
         <li className="wd-assignment-list-item">
-          <a href="/Courses/1234/Assignments/123"
+          <Link href="/Courses/1234/Assignments/123"
              className="wd-assignment-link" >
             E1 - Midterm
-          </a><br/>
+          </Link><br/>
 Multiple Modules | <b>Not Available Until</b> May 5 at 6:00pm |<br/>
 <b>Due</b> May 12 at 11:59pm | 100 pts
           </li>
         <li className="wd-assignment-list-item">
-          <a href="/Courses/1234/Assignments/123"
+          <Link href="/Courses/1234/Assignments/123"
              className="wd-assignment-link" >
             E2 - Final
-          </a><br/>
+          </Link><br/>
 Multiple Modules | <b>Not Available Until</b> May 5 at 6:00pm |<br/>
 <b>Due</b> May 12 at 11:59pm | 100 pts
           </li>
@@ -103,10 +105,10 @@ Multiple Modules | <b>Not Available Until</b> May 5 at 6:00pm |<br/>
         PROJECT 25% of Total <button>+</button> </h3>
       <ul id="wd-project-list">
         <li className="wd-assignment-list-item">
-          <a href="/Courses/1234/Assignments/123"
+          <Link href="/Courses/1234/Assignments/123"
              className="wd-assignment-link" >
             Pazza Implementation
-          </a><br/>
+          </Link><br/>
 Multiple Modules | <b>Not Available Until</b> May 5 at 6:00pm |<br/>
 <b>Due</b> May 12 at 11:59pm | 100 pts
           </li>
