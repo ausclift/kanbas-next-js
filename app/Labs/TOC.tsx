@@ -6,7 +6,11 @@ export default function TOC() {
        <Link href="/Labs" id="wd-lab1-link">
          Home </Link>
      </li>
-    <li>
+     <li>
+       <Link href="https://github.com/ausclift/kanbas-next-js" id="wd-github">
+         Github </Link>
+     </li>
+     <li>
        <Link href="/" id="wd-kambaz-link">
          Kambaz </Link>
      </li>
