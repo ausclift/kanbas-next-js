@@ -1,13 +1,23 @@
+import { FormControl, FormSelect, FormCheck, FormLabel, Row, Col, Button } from "react-bootstrap";
+import Link from "next/link";
 const today = new Date().toISOString().split("T")[0];
 
 export default function AssignmentEditor() {
   return (
     <div id="wd-assignments-editor">
-      <label htmlFor="wd-name">Assignment Name</label><br/><br/>
-      <input id="wd-name" defaultValue="A1 - ENV + HTML"/><br/><br/>
-      <textarea
+
+      <FormLabel>Assignment Name</FormLabel>
+      <FormControl
+        id="wd-name"
+        defaultValue="A1 - ENV + HTML"
+        placeholder="Assignment Name"
+        className="mb-3"
+      />
+
+      <FormControl
+        as="textarea"
         id="wd-description"
-        style={{ width: "80%", height: "200px" }}
+        style={{ height: "300px" }}
         defaultValue={
 `The assignment is available online.
 
@@ -19,117 +29,97 @@ The landing page should include the following:
 - Link to the Kanbas application
 - Links to all relevant source code repositories
 
-The Kanbas application should include a link to navigate back to the landing page.`
-        }/>
-      <br/><br/>
-      <table style={{width: "80%" }} cellPadding={10}>
-        <tbody>
+The Kanbas application should include a link to navigate back to the landing page.`}
+        className="mb-3"
+      />
 
-          <tr>
-            <td align="right" valign="top">
-              <label htmlFor="wd-points">Points</label>
-            </td>
-            <td>
-              <input id="wd-points" defaultValue={100} type="number"/>
-            </td>
-          </tr>
+      <Row className="mb-3 align-items-center">
+        <FormLabel column sm="3" className="text-sm-end">
+          Points
+        </FormLabel>
+        <Col sm="9">
+          <FormControl type="number" defaultValue={100} id="wd-points"/>
+        </Col>
+      </Row>
 
-          <tr>
-            <td align="right" valign="top">
-              <label htmlFor="wd-group">Assignment Group</label>
-            </td>
-            <td>
-              <select id="wd-group" defaultValue="ASSIGNMENT">
-                <option value="ASSIGNMENT">Assignment</option>
-                <option value="QUIZ">Quiz</option>
-                <option value="TEST">Test</option>
-                <option value="PROJECT">Project</option>
-              </select>
-            </td>
-          </tr>
+      <Row className="mb-3 align-items-center">
+        <FormLabel column sm="3" className="text-sm-end">
+          Assignment Group
+        </FormLabel>
+        <Col sm="9">
+          <FormSelect defaultValue="ASSIGNMENT" id="wd-group">
+            <option value="ASSIGNMENT">Assignment</option>
+            <option value="QUIZ">Quiz</option>
+            <option value="TEST">Test</option>
+            <option value="PROJECT">Project</option>
+          </FormSelect>
+        </Col>
+      </Row>
 
-          <tr>
-            <td align="right" valign="top">
-              <label htmlFor="wd-display-grade-as">Display Grade as</label>
-            </td>
-            <td>
-              <select id="wd-display-grade-as">
-                <option selected value="PERCENTAGE">Percentage</option>
-                <option value="POINTS">Points</option>
-              </select>
-            </td>
-          </tr>
+      <Row className="mb-3 align-items-center">
+        <FormLabel column sm="3" className="text-sm-end">
+          Display Grade As
+        </FormLabel>
+        <Col sm="9">
+          <FormSelect defaultValue="PERCENTAGE" id="wd-display-grade-as">
+            <option value="PERCENTAGE">Percentage</option>
+            <option value="POINTS">Points</option>
+          </FormSelect>
+        </Col>
+      </Row>
 
-          <tr>
-            <td align="right" valign="top">
-              <label htmlFor="wd-submission-type">Submission Type</label>
-            </td>
-            <td>
-              <select id="wd-submission-type">
-                <option selected value="ONLINE">Online</option>
-                <option value="OFFLINE">Offline</option>
-              </select>
-            </td>
-          </tr>
+      <Row className="mb-3 align-items-start">
+        <FormLabel column sm="3" className="text-sm-end">
+          Submission Type
+        </FormLabel>
+        <Col sm="9">
+          <div className="p-3 border rounded">
+            <FormSelect defaultValue="ONLINE" id="wd-submission-type" className="mb-3">
+              <option value="ONLINE">Online</option>
+              <option value="OFFLINE">Offline</option>
+            </FormSelect>
+            <FormLabel className="d-block mb-3 fw-bold">Online Entry Options</FormLabel>
+            <FormCheck id="wd-text-entry" label="Text Entry" className="mb-3" />
+            <FormCheck id="wd-website-url" label="Website URL" className="mb-3" />
+            <FormCheck id="wd-media-recordings" label="Media Recordings" className="mb-3" />
+            <FormCheck id="wd-student-annotation" label="Student Annotations" className="mb-3" />
+            <FormCheck id="wd-file-upload" label="File Uploads" />
+          </div>
+        </Col>
+      </Row>
 
-          <tr>
-            <td/>
-            <td>
-              <label>Online Entry Options</label><br/><br/>
-              <label><input id="wd-text-entry" type="checkbox"/>Text Entry</label><br/>
-              <label><input id="wd-website-url" type="checkbox"/>Website URL</label><br/>
-              <label><input id="wd-media-recordings" type="checkbox"/>Media Recordings</label><br/>
-              <label><input id="wd-student-annotation" type="checkbox"/>Student Annotations</label><br/>
-              <label><input id="wd-file-upload" type="checkbox"/>File Uploads</label><br/>
-            </td>
-          </tr>
+      <Row className="mb-3 align-items-start">
+        <FormLabel column sm="3" className="text-sm-end">
+          Assign
+        </FormLabel>
+        <Col sm="9">
+          <div className="p-3 border rounded">
+            <FormLabel className="d-block mb-3 fw-bold">Assign to</FormLabel>
+            <FormControl defaultValue="Everyone" id="wd-assign-to" className="mb-3"/>
+            <FormLabel className="d-block mb-3 fw-bold">Due</FormLabel>
+            <FormControl type="date" defaultValue={today} className="mb-3" id="wd-due-date"/>
+            <Row className="mb-3">
+              <Col>
+                <FormLabel className="mb-3 fw-bold">Available from</FormLabel>
+                <FormControl type="date" defaultValue={today} id="wd-available-from"/>
+              </Col>
+              <Col>
+                <FormLabel className="mb-3 fw-bold">Until</FormLabel>
+                <FormControl type="date" defaultValue={today} id="wd-available-until"/>
+              </Col>
+            </Row>
+          </div>
+        </Col>
+      </Row>
 
-          <tr>
-            <td align="right" valign="top">
-              <label>Assign</label>
-            </td>
-            <td>
-              <label htmlFor="wd-assign-to">Assign to:</label><br/>
-              <input id="wd-assign-to" defaultValue="Everyone" />
-            </td>
-          </tr>
-
-          <tr>
-            <td/>
-            <td>
-              <label htmlFor="wd-due-date">Due</label><br/>
-              <input type="date" id="wd-due-date" defaultValue={today}/><br/><br/>
-
-              <table style={{ borderCollapse: "collapse"}}>
-                <tbody>
-                  <tr>
-                    <td>
-                      <label htmlFor="wd-available-from">Available</label><br/>
-                    </td>
-                    <td>
-                      <label htmlFor="wd-available-until">Until</label><br/>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <input type="date" id="wd-available-from" defaultValue={today}/>
-                    </td>
-                    <td>
-                      <input type="date" id="wd-available-until" defaultValue={today}/>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
-      <hr style={{ width: "80%", marginLeft: 0}}/>
-      <div style={{ width: "80%", display: "flex", justifyContent: "flex-end", marginLeft: 0 }}>
-        <button id="wd-cancel-assignment" style={{ marginRight: "5px" }}>Cancel</button>
-        <button id="wd-save-assignment">Save</button>
+      <div className="d-flex justify-content-end gap-2">
+      <Link href="/Courses/1234/Assignments" passHref>
+        <Button variant="secondary">Cancel</Button>
+      </Link>
+      <Link href="/Courses/1234/Assignments" passHref>
+        <Button variant="danger">Save</Button>
+      </Link>
       </div>
     </div>
-);}
+    
+  );}
