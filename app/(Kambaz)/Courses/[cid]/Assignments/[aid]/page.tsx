@@ -1,15 +1,23 @@
+"use client";
 import { FormControl, FormSelect, FormCheck, FormLabel, Row, Col, Button } from "react-bootstrap";
 import Link from "next/link";
-const today = new Date().toISOString().split("T")[0];
+import { useParams } from "next/navigation";
+import * as db from "../../../../Database";
 
 export default function AssignmentEditor() {
+  const { cid, aid } = useParams();
+  const assignment = db.assignments.find((a: any) => a._id === aid);
+  if (!assignment) {
+    return <div>Assignment not found.</div>;
+  }
+  const formatDate = (dateStr: string) => dateStr ? new Date(dateStr).toISOString().split("T")[0] : "";
   return (
     <div id="wd-assignments-editor">
 
       <FormLabel>Assignment Name</FormLabel>
       <FormControl
         id="wd-name"
-        defaultValue="A1 - ENV + HTML"
+        defaultValue={assignment.title}
         placeholder="Assignment Name"
         className="mb-3"
       />
@@ -18,18 +26,7 @@ export default function AssignmentEditor() {
         as="textarea"
         id="wd-description"
         style={{ height: "300px" }}
-        defaultValue={
-`The assignment is available online.
-
-Submit a link to the landing page of your web application running on Netlify.
-
-The landing page should include the following:
-- Your full name and section
-- Links to each of the lab assignments
-- Link to the Kanbas application
-- Links to all relevant source code repositories
-
-The Kanbas application should include a link to navigate back to the landing page.`}
+        defaultValue={assignment.description}
         className="mb-3"
       />
 
@@ -38,7 +35,7 @@ The Kanbas application should include a link to navigate back to the landing pag
           Points
         </FormLabel>
         <Col sm="9">
-          <FormControl type="number" defaultValue={100} id="wd-points"/>
+          <FormControl type="number" defaultValue={assignment.points} id="wd-points"/>
         </Col>
       </Row>
 
@@ -47,11 +44,11 @@ The Kanbas application should include a link to navigate back to the landing pag
           Assignment Group
         </FormLabel>
         <Col sm="9">
-          <FormSelect defaultValue="ASSIGNMENT" id="wd-group">
-            <option value="ASSIGNMENT">Assignment</option>
-            <option value="QUIZ">Quiz</option>
-            <option value="TEST">Test</option>
-            <option value="PROJECT">Project</option>
+          <FormSelect defaultValue={assignment.assignment_group?.toUpperCase()} id="wd-group">
+            <option value="ASSIGNMENT">ASSIGNMENT</option>
+            <option value="QUIZ">QUIZ</option>
+            <option value="TEST">TEST</option>
+            <option value="PROJECT">PROJECT</option>
           </FormSelect>
         </Col>
       </Row>
@@ -61,9 +58,9 @@ The Kanbas application should include a link to navigate back to the landing pag
           Display Grade As
         </FormLabel>
         <Col sm="9">
-          <FormSelect defaultValue="PERCENTAGE" id="wd-display-grade-as">
-            <option value="PERCENTAGE">Percentage</option>
-            <option value="POINTS">Points</option>
+          <FormSelect defaultValue={assignment.display_grade_as?.toUpperCase()} id="wd-display-grade-as">
+            <option value="PERCENTAGE">PERCENT</option>
+            <option value="POINTS">POINTS</option>
           </FormSelect>
         </Col>
       </Row>
@@ -74,7 +71,7 @@ The Kanbas application should include a link to navigate back to the landing pag
         </FormLabel>
         <Col sm="9">
           <div className="p-3 border rounded">
-            <FormSelect defaultValue="ONLINE" id="wd-submission-type" className="mb-3">
+            <FormSelect defaultValue={assignment.submission_type?.toUpperCase()} id="wd-submission-type" className="mb-3">
               <option value="ONLINE">Online</option>
               <option value="OFFLINE">Offline</option>
             </FormSelect>
@@ -97,15 +94,15 @@ The Kanbas application should include a link to navigate back to the landing pag
             <FormLabel className="d-block mb-3 fw-bold">Assign to</FormLabel>
             <FormControl defaultValue="Everyone" id="wd-assign-to" className="mb-3"/>
             <FormLabel className="d-block mb-3 fw-bold">Due</FormLabel>
-            <FormControl type="date" defaultValue={today} className="mb-3" id="wd-due-date"/>
+            <FormControl type="date" defaultValue={formatDate(assignment.due_date)} className="mb-3" id="wd-due-date"/>
             <Row className="mb-3">
               <Col>
                 <FormLabel className="mb-3 fw-bold">Available from</FormLabel>
-                <FormControl type="date" defaultValue={today} id="wd-available-from"/>
+                <FormControl type="date" defaultValue={formatDate(assignment.available_date)} id="wd-available-from"/>
               </Col>
               <Col>
                 <FormLabel className="mb-3 fw-bold">Until</FormLabel>
-                <FormControl type="date" defaultValue={today} id="wd-available-until"/>
+                <FormControl type="date" defaultValue={formatDate(assignment.until_date)} id="wd-available-until"/>
               </Col>
             </Row>
           </div>
@@ -113,10 +110,10 @@ The Kanbas application should include a link to navigate back to the landing pag
       </Row>
 
       <div className="d-flex justify-content-end gap-2">
-      <Link href="/Courses/1234/Assignments" passHref>
+      <Link href={`/Courses/${cid}/Assignments`} passHref>
         <Button variant="secondary">Cancel</Button>
       </Link>
-      <Link href="/Courses/1234/Assignments" passHref>
+      <Link href={`/Courses/${cid}/Assignments`} passHref>
         <Button variant="danger">Save</Button>
       </Link>
       </div>

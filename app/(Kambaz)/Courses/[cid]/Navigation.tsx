@@ -2,30 +2,28 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-export default function CourseNavigation() {
+export default function CourseNavigation({ params }: { params: { cid: string } }) {
   const pathname = usePathname();
-
-  const links = [
-    { href: "/Courses/1234/Home", label: "Home" },
-    { href: "/Courses/1234/Modules", label: "Modules" },
-    { href: "/Courses/1234/Piazza", label: "Piazza" },
-    { href: "/Courses/1234/Zoom", label: "Zoom" },
-    { href: "/Courses/1234/Assignments", label: "Assignments" },
-    { href: "/Courses/1234/Quizzes", label: "Quizzes" },
-    { href: "/Courses/1234/People/Table", label: "People" },
-  ];
-
+  const { cid } = params;
+  const links = ["Home", "Modules", "Piazza", "Zoom", "Assignments", "Quizzes", "Grades", "People"];
+  const gethref = (label: string) => {
+    if (label === "People") return `/Courses/${cid}/People/Table`;
+    return `/Courses/${cid}/${label}`;
+  };
   return (
     <div id="wd-courses-navigation" className="wd list-group fs-5 rounded-0">
-      {links.map((link) => (
-        <Link
-          key={link.href} href={link.href}
-          className={`list-group-item border-0
-          ${pathname === link.href ? "active" : "text-danger"}
-          `}>
-          {link.label}
-        </Link>
-      ))}
+      {links.map((label) => {
+        const href = gethref(label);
+        const isActive = pathname === href;
+        return (
+          <Link
+            key={label}
+            href={href}
+            className={`list-group-item border-0 ${isActive ? "active" : "text-danger"}`}>
+            {label}
+          </Link>
+        );
+      })}
     </div>
   );
 }
