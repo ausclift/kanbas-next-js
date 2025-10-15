@@ -9,10 +9,11 @@ type CoursesLayoutProps = {
   params: { cid: string };
 };
 
-export default function CoursesLayout({ children, params }: CoursesLayoutProps) {
+export default async function CoursesLayout({ children, params }: CoursesLayoutProps) {
   const { cid } = params;
-  const course = courses.find((course) => course._id === cid);
-
+  const course = await new Promise<typeof courses[0] | undefined>((resolve) => {
+    setTimeout(() => resolve(courses.find((c) => c._id === cid)), 50);
+  });
   return (
     <div id="wd-courses">
       <h2 className="text-danger">
