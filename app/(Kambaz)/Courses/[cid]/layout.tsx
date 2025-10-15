@@ -4,9 +4,13 @@ import CourseNavigation from "./Navigation";
 import { courses } from "../../Database";
 import Breadcrumb from "./Breadcrumb";
 
-export default async function CoursesLayout(
-  { children, params }: Readonly<{ children: ReactNode; params: Promise<{ cid: string, course: string }> }>) {
-  const { cid } = await params;
+type CoursesLayoutProps = {
+  children: ReactNode;
+  params: { cid: string };
+};
+
+export default function CoursesLayout({ children, params }: CoursesLayoutProps) {
+  const { cid } = params;
   const course = courses.find((course) => course._id === cid);
 
   return (
