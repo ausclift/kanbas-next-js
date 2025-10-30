@@ -16,7 +16,9 @@ export default function Dashboard() {
     image: "/images/reactjs.jpg", description: "Course Description"
   });
   const { currentUser } = useSelector((state: any) => state.accountReducer);
-  const { enrollments } = useSelector((state: any) => state.enrollmentsReducer);
+  const { enrollments } = useSelector(
+  (state: any) => state.enrollmentsReducer
+   ) as { enrollments: { _id: string; user: string; course: string }[] };
   const isFaculty = currentUser?.role === "FACULTY";
   const [showAll, setShowAll] = useState(false);
   const isEnrolled = (courseId: string) => enrollments.some(
