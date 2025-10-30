@@ -1,3 +1,4 @@
+"use client";
 import { Button, FormControl } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
