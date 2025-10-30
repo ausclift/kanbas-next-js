@@ -1,4 +1,8 @@
 "use client";
+
+import { Provider } from "react-redux";
+import store from "./store";
+
 import PassingFunctions from "./PassingFunctions";
 import ClickEvent from "./ClickEvent";
 import PassingDataOnEvent from "./PassingDataOnEvent";
@@ -11,8 +15,6 @@ import ObjectStateVariable from "./ObjectStateVariables";
 import ArrayStateVariable from "./ArrayStateVariables";
 import ParentStateComponent from "./ParentStateComponent";
 import ReduxExamples from "./ReduxExamples/page";
-import store from "./store";
-import { Provider } from "react-redux";
 
 export default function Lab4() {
   function sayHello() {
@@ -39,5 +41,5 @@ export default function Lab4() {
         <ReduxExamples />
       </Provider>
     </div>
-    );
+  );
 }

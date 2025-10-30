@@ -1,4 +1,5 @@
 "use client";
+export const dynamic = "force-dynamic";
 import { Button, FormControl } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
