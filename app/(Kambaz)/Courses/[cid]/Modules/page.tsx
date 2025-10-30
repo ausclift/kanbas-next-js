@@ -1,17 +1,27 @@
 "use client";
-import { ListGroup, ListGroupItem } from "react-bootstrap";
+import { ListGroup, ListGroupItem, FormControl } from "react-bootstrap";
 import ModulesControls from "./ModuleControls";
 import LessonControlButtons from "./LessonControlButtons";
 import ModuleControlButtons from "./ModuleControlButtons";
 import { BsGripVertical } from "react-icons/bs";
 import { useParams } from "next/navigation";
-import * as db from "../../../Database";
+import { useState } from "react";
+import { addModule, editModule, updateModule, deleteModule } from "./reducer";
+import { useSelector, useDispatch } from "react-redux";
 export default function Modules() {
   const { cid } = useParams();
-  const modules = db.modules;
+  const [moduleName, setModuleName] = useState("");
+  const { modules } = useSelector((state: any) => state.modulesReducer);
+  const { currentUser } = useSelector((state: any) => state.accountReducer);
+  const dispatch = useDispatch();
+  const isFaculty = currentUser?.role === "FACULTY";
   return (
     <div>
-      <ModulesControls /><br />
+      {isFaculty &&<ModulesControls
+        setModuleName={setModuleName}
+        moduleName={moduleName}
+        addModule={() => dispatch(addModule({ name: moduleName, course: cid }))}/>}
+      <br />
       <ListGroup className="rounded-0" id="wd-modules">
 
         {modules
@@ -19,7 +29,23 @@ export default function Modules() {
           .map((module: any) => (
             <ListGroupItem className="wd-module p-0 mb-5 fs-5 border-gray">
             <div className="wd-title p-3 ps-2 bg-secondary">
-              <BsGripVertical className="me-2 fs-3" /> {module.name} <ModuleControlButtons />
+              <BsGripVertical className="me-2 fs-3" />
+              {!module.editing && module.name}
+              { module.editing && (
+                <FormControl className="w-50 d-inline-block"
+                      onChange={(e) => dispatch(
+                        updateModule({ ...module, name: e.target.value })
+                      )}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          dispatch(updateModule({ ...module, editing: false }));
+                        }
+                      }}
+                      defaultValue={module.name}/>
+              )}
+              {isFaculty && <ModuleControlButtons moduleId={module._id}
+                  deleteModule={(moduleId) => {dispatch(deleteModule(moduleId));}}
+                  editModule={(moduleId) => dispatch(editModule(moduleId))} />}
             </div>
             {module.lessons && (
               <ListGroup className="wd-lessons rounded-0">

@@ -4,13 +4,17 @@ import AssignmentControlButtons from "./AssignmentControlButtons";
 import { BsGripVertical, BsFillCaretDownFill, BsJournalText } from "react-icons/bs";
 import AssignmentsControlButtons from "./AssignmentsControlButtons";
 import AssignmentControls from "./AssignmentControls";
-import Link from "next/link";
 import { useParams } from "next/navigation";
-import * as db from "../../../Database";
+import { deleteAssignment } from "./reducer";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function Assignments() {
   const { cid } = useParams();
-  const assignments = db.assignments;
+  const { assignments } = useSelector((state: any) => state.assignmentsReducer);
+  const { currentUser } = useSelector((state: any) => state.accountReducer);
+  const dispatch = useDispatch();
+  const courseId = Array.isArray(cid) ? cid[0] : cid
+  if (!courseId) return <div>Course ID not found</div>;
   const formatDateTime = (dateStr: string) => {
     const options: Intl.DateTimeFormatOptions = {
       month: "short",
@@ -21,15 +25,17 @@ export default function Assignments() {
     };
     return new Date(dateStr).toLocaleString(undefined, options);
   };
+  const isFaculty = currentUser?.role === "FACULTY";
   return (
     <div>
-      <AssignmentControls /><br /><br /><br />
+      {isFaculty && <AssignmentControls cid={ courseId } />}<br />
       <ListGroup className="rounded-0" id="wd-modules">
 
         <ListGroupItem className="wd-module p-0 mb-5 fs-5 border-gray">
           <div className="wd-title p-3 ps-2 bg-secondary">
             <BsGripVertical className="me-2 fs-3" />
-            <BsFillCaretDownFill className="me-1 fs-6" /> ASSIGNMENTS <AssignmentsControlButtons />
+            <BsFillCaretDownFill className="me-1 fs-6" /> ASSIGNMENTS
+            {isFaculty && <AssignmentsControlButtons />}
           </div>
 
           <ListGroup className="wd-lessons rounded-0">
@@ -44,11 +50,7 @@ export default function Assignments() {
                 <BsJournalText className="fs-3 text-success" />
               </div>
               <div className="flex-grow-1">
-                <Link 
-                  href={`/Courses/${cid}/Assignments/${assignment._id}`} 
-                  className="text-dark text-decoration-none">
-                  {assignment.title}
-                </Link>
+                {assignment.title}
                 <div className="fs-6">
                   <span className="text-danger">Multiple Modules</span> | 
                   <span className="fw-bold"> Not Available Until </span>
@@ -59,9 +61,12 @@ export default function Assignments() {
                   {formatDateTime(assignment.due_date)} | {assignment.points} pts
                 </div>
               </div>
-              <div className="ms-3">
-                <AssignmentControlButtons />
-              </div>
+              {isFaculty && <div className="ms-3">
+                <AssignmentControlButtons
+                      assignmentId={assignment._id}
+                      deleteAssignment={(assignmentId) => {dispatch(deleteAssignment(assignmentId));}}
+                      cid={ courseId }/>
+              </div>}
             </ListGroupItem>
               ))}
           </ListGroup>
