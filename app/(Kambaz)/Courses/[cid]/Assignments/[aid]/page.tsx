@@ -3,13 +3,42 @@ import { FormControl, FormSelect, FormCheck, FormLabel, Row, Col, Button } from 
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { addAssignment, updateAssignment } from "../reducer";
+import * as client from "../client";
+import { addAssignment, updateAssignment, setAssignments } from "../reducer";
 
 export default function AssignmentEditor() {
+  const { assignments } = useSelector((state: any) => state.assignmentsReducer);
+  const { currentUser } = useSelector((state: any) => state.accountReducer);
   const { cid, aid } = useParams();
   const router = useRouter();
   const dispatch = useDispatch();
+  const courseId = Array.isArray(cid) ? cid[0] : cid;
+  if (!courseId) return <div>Course ID not found</div>;
 
+  const onCreateAssignmentForCourse = async () => {
+    if (!courseId) return;
+    const newAssignment = {
+      title,
+      description,
+      points,
+      assignment_group: assignmentGroup,
+      display_grade_as: displayGradeAs,
+      submission_type: submissionType,
+      due_date: dueDate,
+      available_date: availableFrom,
+      until_date: availableUntil,
+      course: courseId,
+    };
+    const created = await client.createAssignmentForCourse(courseId, newAssignment);
+    dispatch(addAssignment(created));
+  };
+
+  const onUpdateAssignment = async (assignment: any) => {
+    await client.updateAssignment(assignment);
+    const newAssignments = assignments.map((a: any) => a._id === assignment._id ? assignment : a );
+    dispatch(setAssignments(newAssignments));
+  };
+    
   const assignment = useSelector((state: any) =>
     state.assignmentsReducer.assignments.find((a: any) => a._id === aid)
   );
@@ -24,7 +53,7 @@ export default function AssignmentEditor() {
   const [availableFrom, setAvailableFrom] = useState(assignment?.available_date ? assignment.available_date.split("T")[0] : "");
   const [availableUntil, setAvailableUntil] = useState(assignment?.until_date ? assignment.until_date.split("T")[0] : "");
 
-  const saveAssignment = () => {
+  const saveAssignment = async () => {
     const payload = {
       _id: assignment?._id,
       title,
@@ -39,11 +68,11 @@ export default function AssignmentEditor() {
       course: cid,
     };
 
-    if (assignment?._id) {
-      dispatch(updateAssignment(payload));
-    } else {
-      dispatch(addAssignment(payload));
-    }
+  if (assignment?._id) {
+    await onUpdateAssignment(payload);
+  } else {
+    await onCreateAssignmentForCourse();
+  }
 
     router.push(`/Courses/${cid}/Assignments`);
   };
@@ -174,11 +203,11 @@ export default function AssignmentEditor() {
         </Col>
       </Row>
 
-      <div className="d-flex justify-content-end gap-2">
-        <Button variant="secondary" onClick={() => router.push(`/Courses/${cid}/Assignments`)}>
+      <div className="d-flex justify-content-end">
+        <Button className="btn-secondary me-3" onClick={() => router.push(`/Courses/${cid}/Assignments`)}>
           Cancel
         </Button>
-        <Button variant="danger" onClick={saveAssignment}>
+        <Button className="btn-danger" onClick={saveAssignment}>
           Save
         </Button>
       </div>

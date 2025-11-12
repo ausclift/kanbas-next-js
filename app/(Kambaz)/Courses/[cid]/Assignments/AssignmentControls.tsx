@@ -8,8 +8,7 @@ export default function AssignmentControls({ cid }: { cid: string }) {
   return (
     <div
       id="wd-modules-controls"
-      className="d-flex flex-wrap justify-content-between align-items-center gap-2"
-    >
+      className="d-flex flex-wrap justify-content-between align-items-center gap-2">
       <InputGroup style={{ minWidth: "300px", maxWidth: "50%" }}>
         <InputGroupText>
           <FaSearch />
@@ -17,8 +16,7 @@ export default function AssignmentControls({ cid }: { cid: string }) {
         <FormControl
           placeholder="Search..."
           id="wd-search-assignments"
-          className="form-control-lg"
-        />
+          className="form-control-lg" />
       </InputGroup>
 
       <div className="d-flex gap-2 flex-wrap">

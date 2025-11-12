@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import AccountNavigation from "./Navigation";
 export default function AccountLayout({ children }: Readonly<{ children: ReactNode }>) {
  return (
-   <div id="wd-kambaz">
+   <div id="wd-kambaz" className="mb-3 me-3 mt-3">
      <table>
        <tbody>
          <tr>

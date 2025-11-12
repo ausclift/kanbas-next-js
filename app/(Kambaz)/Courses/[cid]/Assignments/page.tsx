@@ -1,12 +1,14 @@
 "use client";
+import * as client from "./client";
 import { ListGroup, ListGroupItem } from "react-bootstrap";
 import AssignmentControlButtons from "./AssignmentControlButtons";
 import { BsGripVertical, BsFillCaretDownFill, BsJournalText } from "react-icons/bs";
 import AssignmentsControlButtons from "./AssignmentsControlButtons";
 import AssignmentControls from "./AssignmentControls";
+import { deleteAssignment, setAssignments } from "./reducer";
 import { useParams } from "next/navigation";
-import { deleteAssignment } from "./reducer";
 import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
 
 export default function Assignments() {
   const { cid } = useParams();
@@ -26,6 +28,21 @@ export default function Assignments() {
     return new Date(dateStr).toLocaleString(undefined, options);
   };
   const isFaculty = currentUser?.role === "FACULTY";
+
+    const fetchAssignments = async () => {
+      const assignments = await client.findAssignmentsForCourse(cid as string);
+      dispatch(setAssignments(assignments));
+    };
+  
+    const onRemoveAssignment = async (assignmentId: string) => {
+      await client.deleteAssignment(assignmentId);
+      dispatch(deleteAssignment(assignmentId));
+    };
+  
+    useEffect(() => {
+      fetchAssignments();
+    }, []);
+  
   return (
     <div>
       {isFaculty && <AssignmentControls cid={ courseId } />}<br />
@@ -42,7 +59,9 @@ export default function Assignments() {
             {assignments
               .filter((assignment: any) => assignment.course === cid)
               .map((assignment: any) => (
-            <ListGroupItem className="wd-lesson p-3 ps-1 d-flex align-items-center">
+            <ListGroupItem
+              key={assignment._id}
+              className="wd-lesson p-3 ps-1 d-flex align-items-center">
               <div className="d-flex align-items-center me-2">
                 <BsGripVertical className="fs-3" />
               </div>
@@ -64,7 +83,7 @@ export default function Assignments() {
               {isFaculty && <div className="ms-3">
                 <AssignmentControlButtons
                       assignmentId={assignment._id}
-                      deleteAssignment={(assignmentId) => {dispatch(deleteAssignment(assignmentId));}}
+                      deleteAssignment={(assignmentId) => onRemoveAssignment(assignmentId)}
                       cid={ courseId }/>
               </div>}
             </ListGroupItem>
