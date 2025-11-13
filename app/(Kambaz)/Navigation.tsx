@@ -16,7 +16,7 @@ export default function KambazNavigation() {
     { label: "Inbox",     path: "/Inbox",     icon: FaInbox },
     { label: "Labs",      path: "/Labs",      icon: LiaCogSolid },
   ];
-  
+  console.log(process.env.NEXT_PUBLIC_HTTP_SERVER);
   return (
     <ListGroup id="wd-kambaz-navigation" style={{width: 120}}
       className="rounded-0 position-fixed bottom-0 top-0 d-none d-md-block bg-black z-2">
