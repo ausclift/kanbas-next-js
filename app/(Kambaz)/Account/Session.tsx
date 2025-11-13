@@ -15,6 +15,7 @@ export default function Session({ children }: { children: any }) {
     setPending(false);
   };
   useEffect(() => {
+    console.log(process.env.NEXT_PUBLIC_HTTP_SERVER);
     fetchProfile();
   }, []);
   if (!pending) {
