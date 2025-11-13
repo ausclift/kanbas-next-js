@@ -11,6 +11,7 @@ export default function Signin() {
   const dispatch = useDispatch();
   const signin = async () => {
     const user =  await client.signin(credentials);
+    console.log(process.env.NEXT_PUBLIC_HTTP_SERVER);
     if (!user) return;
     dispatch(setCurrentUser(user));
     redirect("/Dashboard");
