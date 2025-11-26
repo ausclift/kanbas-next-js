@@ -24,5 +24,5 @@ const enrollmentsSlice = createSlice({
     },
   },
 });
-export const { addEnrollment, removeEnrollment, setEnrollments } = enrollmentsSlice.actions;
+export const { setEnrollments, addEnrollment, removeEnrollment } = enrollmentsSlice.actions;
 export default enrollmentsSlice.reducer;

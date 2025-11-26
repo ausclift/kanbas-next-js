@@ -3,12 +3,11 @@ import { FormControl, FormSelect, FormCheck, FormLabel, Row, Col, Button } from 
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { addAssignment, setAssignments } from "../reducer";
 import * as client from "../client";
-import { addAssignment, updateAssignment, setAssignments } from "../reducer";
 
 export default function AssignmentEditor() {
   const { assignments } = useSelector((state: any) => state.assignmentsReducer);
-  const { currentUser } = useSelector((state: any) => state.accountReducer);
   const { cid, aid } = useParams();
   const router = useRouter();
   const dispatch = useDispatch();
@@ -34,7 +33,7 @@ export default function AssignmentEditor() {
   };
 
   const onUpdateAssignment = async (assignment: any) => {
-    await client.updateAssignment(assignment);
+    await client.updateAssignment(courseId, assignment);
     const newAssignments = assignments.map((a: any) => a._id === assignment._id ? assignment : a );
     dispatch(setAssignments(newAssignments));
   };

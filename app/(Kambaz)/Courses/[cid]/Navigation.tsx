@@ -7,7 +7,6 @@ export default function CourseNavigation({ params }: { params: { cid: string } }
   const { cid } = params;
   const links = ["Home", "Modules", "Piazza", "Zoom", "Assignments", "Quizzes", "Grades", "People"];
   const gethref = (label: string) => {
-    if (label === "People") return `/Courses/${cid}/People/Table`;
     return `/Courses/${cid}/${label}`;
   };
   return (

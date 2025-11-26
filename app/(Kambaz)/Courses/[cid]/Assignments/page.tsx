@@ -8,15 +8,17 @@ import AssignmentControls from "./AssignmentControls";
 import { deleteAssignment, setAssignments } from "./reducer";
 import { useParams } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function Assignments() {
   const { cid } = useParams();
+  const courseId = Array.isArray(cid) ? cid[0] : cid;
   const { assignments } = useSelector((state: any) => state.assignmentsReducer);
   const { currentUser } = useSelector((state: any) => state.accountReducer);
+  const isFaculty = currentUser?.role === "FACULTY";
   const dispatch = useDispatch();
-  const courseId = Array.isArray(cid) ? cid[0] : cid
   if (!courseId) return <div>Course ID not found</div>;
+
   const formatDateTime = (dateStr: string) => {
     const options: Intl.DateTimeFormatOptions = {
       month: "short",
@@ -27,21 +29,20 @@ export default function Assignments() {
     };
     return new Date(dateStr).toLocaleString(undefined, options);
   };
-  const isFaculty = currentUser?.role === "FACULTY";
 
-    const fetchAssignments = async () => {
-      const assignments = await client.findAssignmentsForCourse(cid as string);
-      dispatch(setAssignments(assignments));
-    };
-  
-    const onRemoveAssignment = async (assignmentId: string) => {
-      await client.deleteAssignment(assignmentId);
-      dispatch(deleteAssignment(assignmentId));
-    };
-  
-    useEffect(() => {
-      fetchAssignments();
-    }, []);
+  const fetchAssignments = async () => {
+    const assignments = await client.findAssignmentsForCourse(courseId);
+    dispatch(setAssignments(assignments));
+  };
+
+  const onRemoveAssignment = async (assignmentId: string) => {
+    await client.deleteAssignment(courseId, assignmentId);
+    dispatch(deleteAssignment(assignmentId));
+  };
+
+  useEffect(() => {
+    fetchAssignments();
+  }, [courseId]);
   
   return (
     <div>
@@ -56,9 +57,7 @@ export default function Assignments() {
           </div>
 
           <ListGroup className="wd-lessons rounded-0">
-            {assignments
-              .filter((assignment: any) => assignment.course === cid)
-              .map((assignment: any) => (
+          {assignments.map((assignment: any) => (
             <ListGroupItem
               key={assignment._id}
               className="wd-lesson p-3 ps-1 d-flex align-items-center">
@@ -77,7 +76,7 @@ export default function Assignments() {
                 </div>
                 <div className="fs-6">
                   <span className="fw-bold">Due </span>
-                  {formatDateTime(assignment.due_date)} | {assignment.points} pts
+                  {formatDateTime(assignment.due_date)} | {assignment.points}{assignment.display_grade_as === "points" ? " pts" : "%"}
                 </div>
               </div>
               {isFaculty && <div className="ms-3">
@@ -94,5 +93,3 @@ export default function Assignments() {
       </ListGroup>
     </div>
 );}
-
-

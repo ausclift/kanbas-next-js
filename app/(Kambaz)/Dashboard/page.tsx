@@ -1,7 +1,7 @@
 "use client";
 import * as client from "../Courses/client";
 import { addNewCourse, deleteCourse, updateCourse, setCourses } from "../Courses/reducer";
-import { addEnrollment, removeEnrollment, setEnrollments } from "../Dashboard/reducer";
+import { setEnrollments, addEnrollment, removeEnrollment } from "./reducer"
 import { useState, useEffect } from "react";
 import { FormControl, Card, CardBody, CardImg, CardText, CardTitle, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,7 +10,7 @@ export default function Dashboard() {
   const dispatch = useDispatch();
   const router = useRouter();
   const { currentUser } = useSelector((state: any) => state.accountReducer);
-  if (!currentUser) return null;
+  if (!currentUser) return router.push(`/Account/Signin`);
   const isFaculty = currentUser?.role === "FACULTY";
   const { courses } = useSelector((state: any) => state.coursesReducer);
   const { enrollments } = useSelector((state: any) => state.enrollmentsReducer) as { enrollments: { _id: string; user: string; course: string }[] };
@@ -32,7 +32,7 @@ export default function Dashboard() {
     const newShowAll = !showAll;
     setShowAll(newShowAll);
     if (newShowAll) await fetchAllCourses();
-    else await fetchMyCourses();
+    else await fetchMyCourses(), fetchEnrollments();
   };
 
   const fetchMyCourses = async () => {
@@ -44,19 +44,19 @@ export default function Dashboard() {
     }
   };
 
-  const fetchAllCourses = async () => {
-    try {
-      const courses = await client.fetchAllCourses();
-      dispatch(setCourses(courses));
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   const fetchEnrollments = async () => {
     try {
       const enrollments = await client.fetchEnrollments();
       dispatch(setEnrollments(enrollments));
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  const fetchAllCourses = async () => {
+    try {
+      const courses = await client.fetchAllCourses();
+      dispatch(setCourses(courses));
     } catch (error) {
       console.error(error);
     }
@@ -79,12 +79,12 @@ export default function Dashboard() {
   };
 
   const onEnroll = async (courseId: string) => {
-    const newEnrollment = await client.enrollUser(courseId);
+    const newEnrollment = await client.enrollUser(currentUser._id, courseId);
     dispatch(addEnrollment(newEnrollment));
   };
 
   const onUnenroll = async (courseId: string) => {
-    await client.unenrollUser(courseId);
+    await client.unenrollUser(currentUser._id, courseId);
     dispatch(removeEnrollment({ user: currentUser._id, course: courseId }));
   };
 

@@ -90,7 +90,7 @@ export default function Profile() {
         <FormGroup className="mb-2" controlId="wd-role">
           <FormLabel>Role:</FormLabel>
           <FormSelect
-            defaultValue={profile.role}
+            value={profile.role}
             onChange={(e) => setProfile({ ...profile, role: e.target.value })}>
             <option value="USER">User</option>
             <option value="ADMIN">Admin</option>
