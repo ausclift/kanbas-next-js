@@ -36,3 +36,9 @@ body * {
   border-left: 3px solid green !important;
 }
 
+.nav-tabs .nav-link {
+  color: #dc3545 !important;
+}
+.nav-tabs .nav-link.active {
+  color: #212529 !important ;
+}

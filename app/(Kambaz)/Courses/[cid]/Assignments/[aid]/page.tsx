@@ -66,7 +66,7 @@ export default function AssignmentEditor() {
       until_date: availableUntil,
       course: cid,
     };
-
+    console.log("Saving assignment with payload:", payload);
   if (assignment?._id) {
     await onUpdateAssignment(payload);
   } else {

@@ -8,7 +8,8 @@ import AssignmentControls from "./AssignmentControls";
 import { deleteAssignment, setAssignments } from "./reducer";
 import { useParams } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import GreenCheckmark from "./GreenCheckmark";
 
 export default function Assignments() {
   const { cid } = useParams();
@@ -52,7 +53,7 @@ export default function Assignments() {
         <ListGroupItem className="wd-module p-0 mb-5 fs-5 border-gray">
           <div className="wd-title p-3 ps-2 bg-secondary">
             <BsGripVertical className="me-2 fs-3" />
-            <BsFillCaretDownFill className="me-1 fs-6" /> ASSIGNMENTS
+            <BsFillCaretDownFill className="me-1 fs-6" /> Assignments
             {isFaculty && <AssignmentsControlButtons />}
           </div>
 
@@ -80,6 +81,7 @@ export default function Assignments() {
                 </div>
               </div>
               {isFaculty && <div className="ms-3">
+                <GreenCheckmark />
                 <AssignmentControlButtons
                       assignmentId={assignment._id}
                       deleteAssignment={(assignmentId) => onRemoveAssignment(assignmentId)}
