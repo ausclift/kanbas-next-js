@@ -3,6 +3,7 @@ const HTTP_SERVER = process.env.NEXT_PUBLIC_HTTP_SERVER;
 const COURSES_API = `${HTTP_SERVER}/api/courses`;
 export const findQuizzesForCourse = async (courseId: string) => {
   const { data } = await axios.get(`${COURSES_API}/${courseId}/quizzes`);
+  console.log("Fetched quizzes:", data);
   return data;
 };
 export const createQuizForCourse = async (courseId: string, quiz: any) => {
@@ -14,10 +15,7 @@ export const deleteQuiz = async (courseId: string, quizId: string) => {
   return data;
 };
 export const updateQuiz = async (courseId: string, quiz: any) => {
-  const { data } = await axios.put(
-    `${COURSES_API}/${courseId}/quizzes/${quiz._id}`,
-    quiz
-  );
+  const { data } = await axios.put(`${COURSES_API}/${courseId}/quizzes/${quiz._id}`, quiz);
   return data;
 };
 export const findQuestionsForQuiz = async (courseId: string, quizId: string) => {
